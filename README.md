@@ -51,18 +51,18 @@ Output: Prints a nicely formatted table with sum, count, empirical probability, 
 
 Example Output
 
-Sum	Count   	Empirical   Prob	   Theoretical Prob
+Sum	Count   	Empirical    Prob	    Theoretical Prob
    2	         27710 	    0.0277	    0.0278
-   3	         55593      0.0556	    0.0556
-   4           83447      0.0834	  	0.0833
-   5	         111280     0.1113		  0.1111
-   6	         138955    	0.1390		  0.1389
-   7	         166778	    0.1668		  0.1667
-   8	         139117	    0.1391		  0.1389
-   9	         110946	    0.1109		  0.1111
-   10          82948	    0.0829		  0.0833
-   11          55334	    0.0553		  0.0556
-   12          28092	    0.0281		  0.0278
+   3	         55593        0.0556	    0.0556
+   4           83447        0.0834	    0.0833
+   5	         111280       0.1113		 0.1111
+   6	         138955    	 0.1390		 0.1389
+   7	         166778	    0.1668		 0.1667
+   8	         139117	    0.1391		 0.1389
+   9	         110946	    0.1109		 0.1111
+   10          82948	       0.0829		 0.0833
+   11          55334	       0.0553		 0.0556
+   12          28092	       0.0281		 0.0278
 (Empirical results will vary slightly per execution, but will closely mirror the theoretical distribution when run enough times.)
 
 Concepts Demonstrated
