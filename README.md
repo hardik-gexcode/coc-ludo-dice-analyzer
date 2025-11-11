@@ -1,96 +1,171 @@
 # coc-ludo-dice-analyzer
-Simulates and analyzes two-dice roll sums for Ludo using C; provides empirical vs theoretical probability distributions with clear code, README, and syllabus-aligned documentation for fundamental programming and data analysis practice.
-Overview
-This project empirically analyzes the probability distribution of the sums obtained by rolling two standard six-sided dice, as in the game of Ludo. The simulation is implemented in C, adheres to first-year C programming and foundational mathematics concepts (per COC Syllabus), and strictly follows originality and anti-plagiarism guidelines.
 
-Features
-Simulates rolling two dice over 1,000,000 trials
+A C program that simulates rolling two six-sided dice 1,000,000 times to analyze the probability distribution of their sums — just like dice rolls in the classic *Ludo* board game! Compares empirical (simulated) vs theoretical (mathematical) probabilities.
 
-Counts and analyzes the frequency of each possible sum (2–12)
+---
 
-Compares empirical (calculated) probabilities to theoretical probabilities
+## 📊 Overview
 
-Code uses core C concepts: arrays, loops, functions, conditionals
+This project empirically analyzes the probability distribution of the sums obtained by rolling two standard six-sided dice. The simulation is implemented in C and demonstrates core programming concepts including random number generation, arrays, loops, functions, and statistical analysis.
 
-Heavily commented for clarity; all code is fully original
+---
 
-Syllabus Integration
-Day 1: Standard C boilerplate code, main() structure
+## ✨ Features
 
-Day 2: Data types, variables, arrays for storing counts
+- **Simulates 1,000,000 dice roll trials** for accurate probability analysis
+- **Counts frequency** of each possible sum (2–12)
+- **Compares empirical vs theoretical probabilities** side-by-side
+- Uses core C concepts: arrays, loops, functions, conditionals
+- Heavily commented for clarity
+- Fully original code following academic integrity guidelines
 
-Day 3: Conditional logic (if, switch), use of rand() function
+---
 
-Day 4: Loops (for loop simulating dice rolls)
+## 🚀 Quick Start
 
-Day 5: Multidimensional data (array processing), basic data analysis
+### Prerequisites
+- GCC compiler (or any C compiler)
 
-Day 6: User-defined function(s), comprehensive commenting and documentation
-File Structure
-.
-├── main.c        # Project source code
-└── README.md     # This file
-Usage
-Prerequisites
-GCC compiler 
+### Clone the Repository
+git clone https://github.com/hardik-gexcode/coc-ludo-dice-analyzer.git
+cd coc-ludo-dice-analyzer
 
-Compilation
+### Compile
 gcc main.c -o ludo
-Running the Simulation
+
+
+### Run
 ./ludo
-Logic & Approach
-Random number generation: Uses rand() seeded with time(0) to fairly simulate dice.
 
-Functionality: rollOneDie() returns a random integer from 1 to 6.
+---
 
-Main loop: Repeats for 1,000,000 trials; for each trial, rolls two dice and tallies their sum in an array (counts[2..12]).
+## 📝 The Code (main.c)
 
-Data analysis: After all trials, computes empirical (simulated) probabilities for each possible sum and compares them side-by-side with the theoretical probabilities (e.g., seven is most common, since there are six ways to make seven).
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-Output: Prints a nicely formatted table with sum, count, empirical probability, and theoretical probability, so results can be clearly compared.
+int rollOneDie(void) {
+    return (rand() % 6) + 1; // Returns 1 to 6 each time
+}
 
-Example Output
+int main() {
+    int counts[13] = {0};
+    int trials = 1000000;
+    int die1, die2, sum;
+    srand(time(NULL)); // Only call this ONCE, and INSIDE main()
 
-Sum	Count   	Empirical    Prob	    Theoretical Prob
-   2	         27710 	    0.0277	    0.0278
-   3	         55593        0.0556	    0.0556
-   4           83447        0.0834	    0.0833
-   5	         111280       0.1113		 0.1111
-   6	         138955    	 0.1390		 0.1389
-   7	         166778	    0.1668		 0.1667
-   8	         139117	    0.1391		 0.1389
-   9	         110946	    0.1109		 0.1111
-   10          82948	       0.0829		 0.0833
-   11          55334	       0.0553		 0.0556
-   12          28092	       0.0281		 0.0278
-(Empirical results will vary slightly per execution, but will closely mirror the theoretical distribution when run enough times.)
+    for (int i = 0; i < trials; ++i) {
+        die1 = rollOneDie();
+        die2 = rollOneDie();
+        sum = die1 + die2;
+        if (sum >= 2 && sum <= 12) {
+            counts[sum]++;
+        }
+    }
 
-Concepts Demonstrated
-Random number generation with rand() and seeding
+    printf("Sum\tCount\tEmpirical Prob\tTheoretical Prob\n");
+    for (int s = 2; s <= 12; ++s) {
+        double empirical = (double)counts[s] / trials;
+        int ways;
+        if (s == 2 || s == 12) ways = 1;
+        else if (s == 3 || s == 11) ways = 2;
+        else if (s == 4 || s == 10) ways = 3;
+        else if (s == 5 || s == 9) ways = 4;
+        else if (s == 6 || s == 8) ways = 5;
+        else if (s == 7) ways = 6;
+        double theoretical = (double)ways / 36.0;
+        printf("%d\t%d\t%.4lf\t\t%.4lf\n", s, counts[s], empirical, theoretical);
+    }
+    return 0;
+}
 
-Functions for modularity and code reuse
 
-Arrays for tallying counts and statistics
+---
 
-Loops for repetitive simulation
+## 📈 Example Output
 
-Conditional logic for data processing
+Sum	 Count	  Empirical Prob	    Theoretical Prob
+2	    27710	    0.0277		         0.0278
+3	    55593	    0.0556		         0.0556
+4	    83447	    0.0834		         0.0833
+5	   111280	    0.1113		         0.1111
+6	   138955	    0.1390		         0.1389
+7	   166778	    0.1668		         0.1667
+8	   139117	    0.1391		         0.1389
+9	   110946	    0.1109		         0.1111
+10	    82948	    0.0829		         0.0833
+11	    55334	    0.0553		         0.0556
+12	    28092	    0.0281		         0.0278
 
-Table generation and formatted output in C
 
-Application of probability and statistical analysis to real data
+*Note: Empirical results vary slightly per execution but closely match theoretical probabilities with large sample sizes.*
 
-What I Learned
-How theoretical and empirical probability compare in practice
+---
 
-Importance of large sample sizes to reveal true probability distributions
+## 🎓 Concepts Demonstrated
 
-Reinforced use of arrays, loops, conditionals, and functions in C
+- Random number generation with `rand()` and `srand()`
+- Modular programming with functions (`rollOneDie()`)
+- Array-based data collection and tallying
+- Loop constructs for repetitive simulation
+- Conditional logic for probability calculation
+- Formatted console output
+- Statistical analysis: empirical vs theoretical probability
 
-How to document and explain both code and the analysis of its output
+---
 
-Author
-Hardik Gupta
+## 🧠 What This Project Teaches
+
+✅ How theoretical and empirical probability converge with large samples  
+✅ Importance of sample size in statistical accuracy  
+✅ Practical application of arrays, loops, and functions in C  
+✅ Real-world data analysis and probability theory  
+✅ Clean code documentation and structure  
+
+---
+
+## 📚 Syllabus Integration
+
+This project aligns with COC C Programming fundamentals:
+
+| Day | Concept Covered |
+|-----|----------------|
+| 1 | Standard C boilerplate, `main()` structure |
+| 2 | Data types, variables, arrays |
+| 3 | Conditional logic, `rand()` function |
+| 4 | Loops (`for` loop for simulation) |
+| 5 | Array processing, data analysis |
+| 6 | User-defined functions, documentation |
+
+---
+
+## 📂 File Structure
+
+coc-ludo-dice-analyzer/
+├── main.c # Source code
+└── README.md # This file
+
+
+---
+
+## 👨‍💻 Author
+
+**Hardik Gupta** ([@hardik-gexcode](https://github.com/hardik-gexcode))  
 Date: November 11, 2025
 
-Note: This project and all its code are fully original, in line with academic integrity guidelines. All logic and structure strictly follow the official COC Syllabus and event documentation.
+---
+
+## 📄 License
+
+This project is fully original and follows academic integrity guidelines. All logic and structure adhere to the official COC Syllabus.
+
+---
+
+## 🌟 Show Your Support
+
+Give a ⭐️ if this project helped you learn about probability and C programming!
+
+---
+
+*Happy Coding! 🎲🎲*
